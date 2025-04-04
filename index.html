@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fake News Detector</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>📰 Fake News Detector</h1>
+    <form id="newsForm">
+      <textarea id="newsText" placeholder="Paste your news article here..." rows="10" required></textarea>
+      <button type="submit">Check News</button>
+    </form>
+    <div id="result"></div>
+  </div>
+  <script>
+    // JS to handle the form (you’ll need a backend API to connect this to)
+    document.getElementById('newsForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const news = document.getElementById('newsText').value;
+      const response = await fetch('/predict', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ news })
+      });
+      const data = await response.json();
+      document.getElementById('result').innerText = data.result;
+    });
+  </script>
+</body>
+</html>
